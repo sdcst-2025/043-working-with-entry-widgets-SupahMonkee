@@ -7,6 +7,13 @@ by the buttons and display the entry in the 3rd entry widget;
 
 import tkinter as tk
 
+def add(event):
+    print('event happened')
+    print(f'details: {event}')
+    num1 = e.get
+
+
+
 w = tk.Tk()
 w.attributes("-topmost",True)
 
