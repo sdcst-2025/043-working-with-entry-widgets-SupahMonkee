@@ -16,10 +16,14 @@ import tkinter as tk
 from tkinter import *
 import math
 
+
 win = tk.Tk()
 win.attributes("-topmost",True)
 press1 = 0
 press2 = 0
+b_sign = 1
+c_sign = 1
+
 
 def factor(event):
     print('event happened')
@@ -28,20 +32,42 @@ def factor(event):
     c = e[1].get()
     b = float(b)
     c = float(c)
+    b = b*b_sign
+    c = c*c_sign
     try:
         x1 = ((-1*b + math.sqrt(b**2 - 4*c))/(2))
         try:
             x2 = ((-1*b - math.sqrt(b**2 - 4*c))/(2))
             x1 = round(x1, 2)
+            x1 = x1*-1
             x2 = round(x2, 2)
-            answer = (f'{x1} & {x2}')
+            x2 = x2*-1
+            if x1 >= 0:
+                x1 = str(f'(x+{x1})')
+            else:
+                x1 = str(f'(x{x1})')
+            if x2 >= 0:
+                x2 = str(f'(x+{x2})')
+            else:
+                x2 = str(f'(x{x2})')
+            answer = (f'{x1}{x2}')
         except:
-            answer = round(x1, 2)
+            x1 = round(x1, 2)
+            if x1 >= 0:
+                answer = str(f'(x+{x1})')
+            else:
+                answer = str(f'(x{x1})')
     except:
         x1 = ('dne')
         try:
             x2 = ((-1*b - math.sqrt(b**2 - 4*c))/(2))
-            answer = round(x2, 2)
+            x2 = round(x2, 2)
+            x2 = x2*-1
+            if x2 >= 0:
+                answer = str(f'(x+{x2})')
+            else:
+                answer = str(f'(x{x2})')
+                
         except:
             answer = ('No Real Roots')
     e[2].delete(0, tk.END)
@@ -56,6 +82,8 @@ def swap1(event):
         b[0].config(text='-')
     else:
         b[0].config(text='+')
+    global b_sign
+    b_sign = b_sign*-1
 
 def swap2(event):
     print('event happened')
@@ -63,8 +91,11 @@ def swap2(event):
     global press2
     press2 += 1
     if press2 % 2 != 0:
-        b[1]
-
+        b[1].config(text='-')
+    else:
+        b[1].config(text='+')
+    global c_sign
+    c_sign = c_sign*-1
 
 
 l = []
@@ -83,6 +114,7 @@ b = []
 b.append(tk.Button(win, text='+',height=0,width=0)) #ax^2 + bx
 b[0].bind('<Button-1>', swap1)
 b.append(tk.Button(win, text='+')) #bx + c
+b[1].bind('<Button-1>', swap2)
 b.append(tk.Button(win, text='FACTOR ME!')) #solve
 b[2].bind('<Button-1>', factor)
 
@@ -96,7 +128,11 @@ l[3].place(x=105,y=43)
 b[1].place(x=115,y=40)
 e[1].place(x=135,y=43)
 b[2].place(x=60, y=75)
-l[4].place(x=30, y=105)
-e[2].place(x=125, y=105)
+l[4].place(x=53, y=100)
+e[2].place(x=52, y=125)
+
 
 win.mainloop()
+
+
+#done
